@@ -24,9 +24,9 @@ public class Mine extends Node {
     @Override
     public void execute() {
         final int[] ROCK_IDS = {10578,10579,10577};
-        final ArrayList<Node> NODES = new ArrayList<>();
-        Collections.addAll(NODES,new MineOre(ctx,ROCK_IDS),new ToMine(ctx,ROCK_IDS));
-        for(Node node : NODES )
+        ArrayList<Node> mineNodes = new ArrayList<>();
+        Collections.addAll(mineNodes,new MineOre(ctx,ROCK_IDS),new ToMine(ctx,ROCK_IDS));
+        for(Node node : mineNodes )
             node.run();
 
     }

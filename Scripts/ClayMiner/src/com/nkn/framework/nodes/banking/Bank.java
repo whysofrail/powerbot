@@ -22,10 +22,10 @@ public class Bank extends Node {
 
     @Override
     public void execute() {
-       final ArrayList<Node> BANK_NODES = new ArrayList<>();
-        Collections.addAll(BANK_NODES, new ToBank(ctx), new Open(ctx), new Deposit(ctx), new Close(ctx));
+        ArrayList<Node> bankNodes = new ArrayList<>();
+        Collections.addAll(bankNodes, new ToBank(ctx), new Open(ctx), new Deposit(ctx), new Close(ctx));
 
-        for(Node node : BANK_NODES)
+        for(Node node : bankNodes)
             node.run();
 
 

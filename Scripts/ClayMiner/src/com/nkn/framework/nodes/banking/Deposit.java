@@ -20,8 +20,8 @@ public class Deposit extends Node {
 
     @Override
     public void execute() {
-        for (int BANK_ITEM_ID : BANK_ITEM_IDS) {
-            ctx.bank.deposit(BANK_ITEM_ID, Bank.Amount.ALL);
+        for (int itemID : BANK_ITEM_IDS) {
+            ctx.bank.deposit(itemID, Bank.Amount.ALL);
         }
 
     }
