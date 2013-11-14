@@ -10,8 +10,10 @@ import org.powerbot.script.methods.MethodContext;
  * @Author : NKN
  */
 public class Bank extends Node {
+    private Node[] bankNodes;
     public Bank(MethodContext ctx) {
         super(ctx);
+        bankNodes = new Node[] {new ToBank(ctx), new Open(ctx), new Deposit(ctx), new Close(ctx)};
     }
 
     @Override
@@ -22,7 +24,7 @@ public class Bank extends Node {
 
     @Override
     public void execute() {
-        Node[] bankNodes = new Node[] {new ToBank(ctx), new Open(ctx), new Deposit(ctx), new Close(ctx)};
+
         for(Node node : bankNodes)
             if(node.canExecute())
                 node.execute();
