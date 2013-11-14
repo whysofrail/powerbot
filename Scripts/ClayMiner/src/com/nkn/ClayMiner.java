@@ -22,18 +22,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Manifest(authors = {"NKN"}, name = "Clay Miner", description = "Mines clay. Perfectly.")
 public class ClayMiner extends PollingScript implements PaintListener, MessageListener{
-    private final ArrayList<Node> NODES = new ArrayList<>();
+    private Node[] nodes;
     private AtomicInteger clayMined = new AtomicInteger(0);
     @Override
     public void start() {
-        Collections.addAll(NODES, new Mine(ctx), new Bank(ctx));
+        nodes = new Node[] {new Mine(ctx), new Bank(ctx)};
         Globals.status = "Starting up";
         ctx.antipatterns.setEnabled(false);
         ctx.camera.setPitch(true);
     }
     @Override
     public int poll() {
-        for (Node node : NODES){
+        for (Node node : nodes){
            if(node.canExecute())
                node.execute();
 

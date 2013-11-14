@@ -5,8 +5,6 @@ import com.nkn.framework.Node;
 import org.powerbot.script.methods.MethodContext;
 
 
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @Author : NKN
@@ -24,7 +22,7 @@ public class Bank extends Node {
 
     @Override
     public void execute() {
-        List<Node> bankNodes = Arrays.asList(new ToBank(ctx), new Open(ctx), new Deposit(ctx), new Close(ctx));
+        Node[] bankNodes = new Node[] {new ToBank(ctx), new Open(ctx), new Deposit(ctx), new Close(ctx)};
         for(Node node : bankNodes)
             if(node.canExecute())
                 node.execute();
