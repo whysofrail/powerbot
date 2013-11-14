@@ -14,6 +14,7 @@ import org.powerbot.script.util.Random;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author : NKN
@@ -22,6 +23,7 @@ import java.util.Collections;
 @Manifest(authors = {"NKN"}, name = "Clay Miner", description = "Mines clay. Perfectly.")
 public class ClayMiner extends PollingScript implements PaintListener, MessageListener{
     private final ArrayList<Node> NODES = new ArrayList<>();
+    private AtomicInteger clayMined = new AtomicInteger(0);
     @Override
     public void start() {
         Collections.addAll(NODES, new Mine(ctx), new Bank(ctx));
@@ -32,24 +34,25 @@ public class ClayMiner extends PollingScript implements PaintListener, MessageLi
     @Override
     public int poll() {
         for (Node node : NODES){
-            if(node.run())
-                return Random.nextInt(250,300);
+           if(node.canExecute())
+               node.execute();
+
         }
-        return 0;
+        return Random.nextInt(250,350);
     }
 
     @Override
     public void repaint(Graphics g) {
         g.setColor(Color.GREEN);
         g.drawString("Status: " + Globals.status, 100, 100);
-        g.drawString("Clay Mined: " + Integer.toString(Globals.clayMined),100,130);
+        g.drawString("Clay Mined: " + clayMined,100,130);
 
     }
 
     @Override
     public void messaged(MessageEvent messageEvent) {
         if(messageEvent.getMessage().contains("manage to mine") && messageEvent.getSender().equals("")){
-            Globals.clayMined++;
+           clayMined.incrementAndGet();
         }
 
     }

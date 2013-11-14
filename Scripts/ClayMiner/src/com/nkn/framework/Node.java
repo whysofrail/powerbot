@@ -11,13 +11,7 @@ public abstract class Node extends MethodProvider{
         super(ctx);
     }
 
-    public boolean run(){
-        if(canExecute()){
-            execute();
-            return true;
-        }
-        return false;
-    }
+
 
     public abstract boolean canExecute();
     public abstract void execute();

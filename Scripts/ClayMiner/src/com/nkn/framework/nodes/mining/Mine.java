@@ -5,7 +5,9 @@ import org.powerbot.script.methods.MethodContext;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -24,10 +26,10 @@ public class Mine extends Node {
     @Override
     public void execute() {
         final int[] ROCK_IDS = {10578,10579,10577};
-        ArrayList<Node> mineNodes = new ArrayList<>();
-        Collections.addAll(mineNodes,new MineOre(ctx,ROCK_IDS),new ToMine(ctx,ROCK_IDS));
+        List<Node> mineNodes = Arrays.asList(new MineOre(ctx,ROCK_IDS),new ToMine(ctx,ROCK_IDS));
         for(Node node : mineNodes )
-            node.run();
+            if(node.canExecute())
+                node.execute();
 
     }
 }
