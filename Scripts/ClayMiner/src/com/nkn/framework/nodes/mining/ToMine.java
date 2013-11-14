@@ -1,5 +1,6 @@
 package com.nkn.framework.nodes.mining;
 
+import com.nkn.Globals;
 import com.nkn.framework.Node;
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.methods.Movement;
@@ -30,9 +31,12 @@ public class ToMine extends Node {
 
     @Override
     public void execute() {
+        Globals.status = "Walking to mine";
+        if(!ctx.movement.isRunning() && ctx.movement.getEnergyLevel() > 30)
+            ctx.movement.setRunning(true);
         Tile[] mineLocations = {new Tile(3080,3400),new Tile(3081,3399),new Tile(3082,3400), new Tile(3083,3399)};
         Tile mineTile = mineLocations[Random.nextInt(0,mineLocations.length )];
-        LocalPath path = ctx.movement.findPath(ctx.movement.getClosestOnMap(mineTile));      //Located on two different map chunks.
+        LocalPath path = ctx.movement.findPath(ctx.movement.getClosestOnMap(mineTile).randomize(2,2));      //Located on two different map chunks.
         path.traverse();
         Condition.wait(new Callable<Boolean>() {
             @Override

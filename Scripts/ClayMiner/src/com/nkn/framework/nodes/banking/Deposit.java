@@ -1,5 +1,6 @@
 package com.nkn.framework.nodes.banking;
 
+import com.nkn.Globals;
 import com.nkn.framework.Node;
 import org.powerbot.script.methods.*;
 import org.powerbot.script.methods.Bank;
@@ -20,6 +21,7 @@ public class Deposit extends Node {
 
     @Override
     public void execute() {
+        Globals.status = "Depositing items";
         for (int itemID : BANK_ITEM_IDS) {
             ctx.bank.deposit(itemID, Bank.Amount.ALL);
         }

@@ -7,7 +7,6 @@ import org.powerbot.script.methods.MethodProvider;
  * @Author : NKN
  */
 public abstract class Node extends MethodProvider{
-
     public Node(MethodContext ctx) {
         super(ctx);
     }

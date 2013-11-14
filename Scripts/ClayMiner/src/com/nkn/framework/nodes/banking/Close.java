@@ -1,5 +1,6 @@
 package com.nkn.framework.nodes.banking;
 
+import com.nkn.Globals;
 import com.nkn.framework.Node;
 import org.powerbot.script.methods.MethodContext;
 
@@ -18,6 +19,7 @@ public class Close extends Node {
 
     @Override
     public void execute() {
+        Globals.status = "Closing bank";
         ctx.bank.close();
     }
 }

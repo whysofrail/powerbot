@@ -1,5 +1,7 @@
 package com.nkn.framework.nodes.banking;
 
+import com.nkn.ClayMiner;
+import com.nkn.Globals;
 import com.nkn.framework.Node;
 import org.powerbot.script.methods.MethodContext;
 
@@ -26,7 +28,10 @@ public class ToBank extends Node {
 
     @Override
     public void execute() {
-        LocalPath path = ctx.movement.findPath(ctx.movement.getClosestOnMap(BANK_TILE));
+        Globals.status = "Walking to bank";
+        if(!ctx.movement.isRunning() && ctx.movement.getEnergyLevel() > 30)
+            ctx.movement.setRunning(true);
+        LocalPath path = ctx.movement.findPath(ctx.movement.getClosestOnMap(BANK_TILE).randomize(2,2));
         path.traverse();
         Condition.wait(new Callable<Boolean>() {
             @Override

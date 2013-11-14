@@ -1,5 +1,6 @@
 package com.nkn.framework.nodes.mining;
 
+import com.nkn.Globals;
 import com.nkn.framework.Node;
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Condition;
@@ -24,6 +25,7 @@ public class MineOre extends Node {
 
     @Override
     public void execute() {
+        Globals.status = "Mining";
         for(final GameObject rock: ctx.objects){
             if(rock.isValid() && rock.interact("Mine")){
                 if(Condition.wait(new Callable<Boolean>() {
@@ -36,5 +38,6 @@ public class MineOre extends Node {
 
             }
         }
+        Globals.status = "Searching for rock";
     }
 }
