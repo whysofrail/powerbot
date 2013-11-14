@@ -2,10 +2,15 @@ package com.nkn.framework.nodes.mining;
 
 import com.nkn.framework.Node;
 import org.powerbot.script.methods.MethodContext;
+import org.powerbot.script.methods.Movement;
 import org.powerbot.script.util.Condition;
 import org.powerbot.script.util.Random;
+import org.powerbot.script.wrappers.LocalPath;
+import org.powerbot.script.wrappers.Path;
 import org.powerbot.script.wrappers.Tile;
+import org.powerbot.script.wrappers.TileMatrix;
 
+import java.util.EnumSet;
 import java.util.concurrent.Callable;
 
 /**
@@ -27,12 +32,13 @@ public class ToMine extends Node {
     public void execute() {
         Tile[] mineLocations = {new Tile(3080,3400),new Tile(3081,3399),new Tile(3082,3400), new Tile(3083,3399)};
         Tile mineTile = mineLocations[Random.nextInt(0,mineLocations.length )];
-        if(ctx.movement.stepTowards(mineTile))
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return ctx.movement.getDistance(ctx.players.local(), ctx.movement.getDestination()) < 7;
-                }
-            }, 550, 20);
+        LocalPath path = ctx.movement.findPath(ctx.movement.getClosestOnMap(mineTile));      //Located on two different map chunks.
+        path.traverse();
+        Condition.wait(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return ctx.movement.getDistance(ctx.players.local(),ctx.movement.getDestination()) < 14;
+            }
+        },250,20);
     }
 }

@@ -2,11 +2,13 @@ package com.nkn.framework.nodes.banking;
 
 import com.nkn.framework.Node;
 import org.powerbot.script.methods.MethodContext;
+
 import org.powerbot.script.util.Condition;
 import org.powerbot.script.util.Random;
 import org.powerbot.script.wrappers.*;
 
 import java.util.concurrent.Callable;
+
 
 /**
  * @Author : NKN
@@ -24,13 +26,14 @@ public class ToBank extends Node {
 
     @Override
     public void execute() {
-        if(ctx.movement.stepTowards(BANK_TILE))
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return ctx.movement.getDistance(ctx.players.local(),ctx.movement.getDestination()) < 7;
-                }
-            },550,20);
+        LocalPath path = ctx.movement.findPath(ctx.movement.getClosestOnMap(BANK_TILE));
+        path.traverse();
+        Condition.wait(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return ctx.movement.getDistance(ctx.players.local(), ctx.movement.getDestination()) < 14;
+            }
+        }, 250, 20);
 
 
 
